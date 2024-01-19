@@ -81,12 +81,4 @@ chmod +x auto_update_python.sh
 
 ##
 ### Upon completion of steps above, follow diagram process:
-
-```mermaid
-graph TD;
-  A((✨ All Set!)) --> B((❎ Problem));
-  A --> C((✅ No Problem)) --> A;
-  B --> D((🛠️ Create Issue)) --> E((⚙ Fixing));
-  E --> |Not Fixed| D;
-  E -->|Fixed| A;
-```
+![Screenshot 2024-01-19 at 3 28 13 PM](https://github.com/chrisyan04/automation_scripts/assets/86560918/42243b32-811b-4e2b-a945-ba7c9cedce5b)
