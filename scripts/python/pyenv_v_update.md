@@ -33,27 +33,41 @@ open -e auto_update_python.sh
 ```bash
 #!/bin/bash
 
-# Set path to your Python installation (.pyenv)
+# Set path to your Python installation (pyenv)
 PYENV_ROOT="$HOME/.pyenv"
 export PATH="$PYENV_ROOT/bin:$PATH"
 eval "$(pyenv init --path)"
 
-# Get the latest Python version available (via pyenv)
-latest_version=$(pyenv install --list | grep -E "^\s*[0-9]+\.[0-50]+\.[0-50]+$" | tail -n 1)
-# above includes regex to find version of form (x.y.z), where x,y,z ∈ ℕ, in pyenv
+# Your log file path
+log_file="$HOME/.../py-v-update-logs.txt"
+
+# Function to log messages with timestamp
+log_message() {
+    echo "$(date +"%Y-%m-%d %H:%M:%S"): $1" >> "$log_file"
+}
+
+# Latest Python version via pyenv
+latest_version=$(pyenv install --list | grep -E "^\s*[0-9]+\.[0-50]+\.[0-50]+$" | tail -n 1 | tr -d '[:space:]') # remove spaces
+
+# Current installed Python version
+installed_version=$(python3 -V 2>&1 | awk '{print $2}' | tr -d '[:space:]') # remove spaces
+
+log_message "Currently installed Python version: $installed_version"
 
 # Check if the latest version is already installed
-if pyenv versions --bare | grep -q "$latest_version"; then
-    echo "Python $latest_version is already installed."
+if [ "$installed_version" == "$latest_version" ]; then
+    log_message "Latest Python version $latest_version is already installed. No action needed."
 else
-    # Install the latest available Python version
-    echo "Installing Python $latest_version..."
-    pyenv install $latest_version
-    pyenv global $latest_version
-fi
+    log_message "Installing latest Python version: $latest_version"
 
-# Log the update timestamp
-echo "Python auto-update performed on $(date)" >> ~/python_auto_update_log.txt
+    # Install the latest version ("yes" automatically accepts the update)
+    yes | pyenv install --skip-existing $latest_version 2>&1 | tee -a "$log_file"
+    
+    # Set installed version as the global version
+    pyenv global $latest_version
+
+    log_message "Python $latest_version installation completed."
+fi
 ```
 
 4. Save that file.
