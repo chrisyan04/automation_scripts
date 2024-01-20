@@ -9,7 +9,7 @@ This is the setup for the purpose of automating the process of updating your Pyt
 ### Prequisites:
 
 - have `pyenv` installed and properly configured on your OS
-- use of `Terminal` (ie. command line)
+- use of `Terminal` or a terminal alternative like `iTerm2`
 - **NOTE:** the following steps involves scripting and a cron job
 
 ### Steps:
