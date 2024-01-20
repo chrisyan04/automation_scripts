@@ -82,9 +82,9 @@ chmod +x auto_update_python.sh
    ```bash
    crontab -e
    ```
-   2. Enter INSERT mode and add a line to schedule the script to run at a desired interval. In this case we are setting it to: 3 a.m. on a daily basis.
+   2. Enter INSERT mode and add a line to schedule the script to run at a desired interval. In this case we are setting it to: midnight on a daily basis.
    ```bash
-   0 3 * * * /path/auto_update_python.sh # in place of /path, put your path
+   0 0 * * * /path/auto_update_python.sh # in place of /path, put your path
    # if you don't recall your path to the script, run:
    pwd
    ```
